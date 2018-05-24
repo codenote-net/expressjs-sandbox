@@ -3,3 +3,11 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
+
+  h2 /csv/upload
+  form(action="/csv/upload" method="post" enctype="multipart/form-data")
+    div
+      label(for="file") Choose a file
+      input(type="file" name="csv")
+    div
+      button= "Send the file"
