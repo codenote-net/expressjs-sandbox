@@ -34,4 +34,23 @@ router.get('/req_setTimeout', function(req, res, next) {
   // no response
 });
 
+// https://nodejs.org/docs/latest-v12.x/api/http.html#http_response_settimeout_msecs_callback
+router.get('/res_setTimeout', function(req, res, next) {
+  const resTimeout = 2000; // ms
+  res.setTimeout(resTimeout);
+
+  let elapsedTime = 0; // 経過時間
+  const delay = 100; // ms
+
+  setInterval(() => {
+    elapsedTime += delay;
+    if (elapsedTime > resTimeout) {
+      return;
+    }
+    console.log(`${elapsedTime} ms`);
+  }, delay);
+
+  // no response
+});
+
 module.exports = router;
