@@ -1,0 +1,20 @@
+extends ../layout
+
+block content
+  h1 /unicode
+
+  h2 POST /unicode/substring
+  form(action="/unicode/substring" method="post")
+    div
+      label substring
+      input(type="text" name="substring")
+    div
+      label unicode-substring
+      input(type="text" name="unicodeSubstring")
+    div
+      label start
+      input(type="number" name="start")
+      label end
+      input(type="number" name="end")
+    div
+      button= "Submit"
