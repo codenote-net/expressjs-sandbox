@@ -1,0 +1,12 @@
+#!/bin/sh
+# Download geoip database GeoLite2-Country.tar.gz
+# @see: https://dev.maxmind.com/geoip/geoip2/geolite2/
+cd tmp/
+curl https://geolite.maxmind.com/download/geoip/database/GeoLite2-Country.tar.gz -O
+tar -zxvf GeoLite2-Country.tar.gz
+rm GeoLite2-Country.tar.gz
+
+mv GeoLite2-Country_*/GeoLite2-Country.mmdb ../data/
+
+# Remove unused files
+rm -rf GeoLite2-Country_*
