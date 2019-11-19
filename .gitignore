@@ -88,6 +88,11 @@ typings/
 # dotenv environment variables file
 .env
 
+## This Project's settings
+# https://qiita.com/ndxbn/items/f124d2b183b60cb074e2
+!.gitignore
 
+data/*
+## End of this Project's settings
 
 # End of https://www.gitignore.io/api/node,macos
