@@ -1,5 +1,5 @@
-var express = require('express')
-var router = express.Router()
+const express = require('express')
+const router = express.Router()
 
 // Timeout in milliseconds. Default: 120000 (2 minutes).
 // https://nodejs.org/docs/latest-v12.x/api/http.html#http_server_timeout
