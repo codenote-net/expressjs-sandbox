@@ -3,6 +3,7 @@ const express = require('express')
 const path = require('path')
 const cookieParser = require('cookie-parser')
 const logger = require('morgan')
+const mongoose = require('mongoose')
 
 const indexRouter = require('./routes/index')
 const csvRouter = require('./routes/csv')
@@ -43,5 +44,15 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500)
   res.render('error')
 })
+
+// connect mongodb
+// Set up default mongoose connection
+mongoose.connect(process.env.MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+// Get the default connection
+const db = mongoose.connection
+// Bind connection to error event (to get notification of connection errors)
+db.on('error', console.error.bind(console, 'MongoDB connection error:'))
+// Bind connection to open event once
+db.once('open', () => console.log('MongoDB connection successful'))
 
 module.exports = app
