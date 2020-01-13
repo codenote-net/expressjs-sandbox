@@ -4,6 +4,15 @@ const path = require('path')
 const cookieParser = require('cookie-parser')
 const logger = require('morgan')
 const mongoose = require('mongoose')
+const fs = require('fs')
+const join = require('path').join
+
+const models = join(__dirname, 'models')
+
+// Bootstrap models
+fs.readdirSync(models)
+  .filter(file => ~file.search(/^[^.].*\.js$/))
+  .forEach(file => require(join(models, file)))
 
 const indexRouter = require('./routes/index')
 const csvRouter = require('./routes/csv')
