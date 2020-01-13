@@ -1,0 +1,22 @@
+extends ../layout
+
+block content
+  h1 /articles
+
+  h2 POST /articles
+  form(action="/articles" method="post")
+    div
+      label title
+      input(type="text" name="title")
+    div
+      label body
+      input(type="text" name="body")
+    div
+      button= "Submit"
+
+  h2 GET /articles
+  each article in articles
+    h3=`_id: ${article._id}`
+    div
+      p=`title: ${article.title}`
+      p=`body ${article.body}`

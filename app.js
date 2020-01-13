@@ -3,8 +3,19 @@ const express = require('express')
 const path = require('path')
 const cookieParser = require('cookie-parser')
 const logger = require('morgan')
+const mongoose = require('mongoose')
+const fs = require('fs')
+const join = require('path').join
+
+const models = join(__dirname, 'models')
+
+// Bootstrap models
+fs.readdirSync(models)
+  .filter(file => ~file.search(/^[^.].*\.js$/))
+  .forEach(file => require(join(models, file)))
 
 const indexRouter = require('./routes/index')
+const articlesRouter = require('./routes/articles')
 const csvRouter = require('./routes/csv')
 const timeoutRouter = require('./routes/timeout')
 const unicodeRouter = require('./routes/unicode')
@@ -23,6 +34,7 @@ app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/', indexRouter)
+app.use('/articles', articlesRouter)
 app.use('/csv', csvRouter)
 app.use('/timeout', timeoutRouter)
 app.use('/unicode', unicodeRouter)
@@ -43,5 +55,15 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500)
   res.render('error')
 })
+
+// connect mongodb
+// Set up default mongoose connection
+mongoose.connect(process.env.MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+// Get the default connection
+const db = mongoose.connection
+// Bind connection to error event (to get notification of connection errors)
+db.on('error', console.error.bind(console, 'MongoDB connection error:'))
+// Bind connection to open event once
+db.once('open', () => console.log('MongoDB connection successful'))
 
 module.exports = app
